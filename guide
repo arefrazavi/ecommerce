@@ -1,0 +1,56 @@
+composer create-project symfony/website-skeleton my-project
+
+php bin/console server:run
+
+composer require sensiolabs/security-checker --dev
+
+----Packages for User Login---
+ composer require symfony/security-bundle
+------------
+
+---Packages for ORM---
+composer require symfony/orm-pack
+
+composer require symfony/maker-bundle --dev
+---------
+
+
+
+
+// Create entity/ add new field
+php bin/console make:entity
+
+--Migration----
+php bin/console make:migration
+
+php bin/console doctrine:migrations:migrate
+
+------
+
+---add many to many relationship with extra field : two one to many relationships
+php bin\console make:entity
+    -ProductVariant
+        -product
+        -relation
+        -Product
+        -ManyToOne
+        -no
+        -yes
+        -variants
+        -no
+
+        -variant
+        -relation
+        -Product
+        -ManyToOne
+        -no
+        -yes
+        -products
+        -no
+
+        -value
+        -string
+        -255
+
+
+--- modify entity
