@@ -68,3 +68,13 @@ php bin\console make:entity
 
 ----building forms---
      composer require symfony/form
+
+----Elastic search----
+    install elastic search:
+        install java
+    composer require friendsofsymfony/elastica-bundle
+    add following to config\bundles.php
+        FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true]
+    create config/packages/fos_elastica.yaml file
+
+
