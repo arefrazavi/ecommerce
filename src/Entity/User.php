@@ -16,6 +16,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable
 {
+    public function toString($object)
+    {
+        return $object instanceof Product
+            ? $object->getId()
+            : 'Product'; // shown in the breadcrumb on the create view
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

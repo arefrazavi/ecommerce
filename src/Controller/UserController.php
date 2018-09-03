@@ -26,10 +26,15 @@ class UserController extends AbstractController
     /**
      * @Route("/login", name="login")
      * @param AuthenticationUtils $authenticationUtils
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
+        if ($this->getUser()){
+            return $this->redirectToRoute('home');
+        }
+
+
         $error = $authenticationUtils->getLastAuthenticationError();
 
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -50,6 +55,10 @@ class UserController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        if ($this->getUser()){
+            return $this->redirectToRoute('home');
+        }
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
@@ -81,4 +90,7 @@ class UserController extends AbstractController
             array('form' => $form->createView())
         );
     }
+
+
+
 }

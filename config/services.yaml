@@ -29,3 +29,34 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    admin.user:
+        class: App\Admin\UserAdmin
+        arguments: [~, App\Entity\User, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              group: User
+              label: User Management
+        public: true
+
+    admin.product:
+        class: App\Admin\ProductAdmin
+        arguments: [~, App\Entity\Product, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              group: Product
+              label: Product Management
+        public: true
+
+    admin.variant:
+        class: App\Admin\VariantAdmin
+        arguments: [~, App\Entity\Variant, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              group: Product
+              label: Variant
+              show_in_dashboard: false
+        public: true

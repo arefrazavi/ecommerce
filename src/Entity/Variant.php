@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VariantRepository")
@@ -18,17 +20,20 @@ class Variant
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="variants")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     private $product;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $color;
 
     /**
      * @ORM\Column(type="decimal", precision=15, scale=0)
+     * @Assert\NotBlank()
+     * @Assert\Type("integer")
      */
     private $price;
 

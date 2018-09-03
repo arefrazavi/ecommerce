@@ -47,4 +47,8 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function addProduct($product) {
+
+    }
 }

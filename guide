@@ -73,8 +73,24 @@ php bin\console make:entity
     install elastic search:
         install java
     composer require friendsofsymfony/elastica-bundle
-    add following to config\bundles.php
-        FOS\ElasticaBundle\FOSElasticaBundle::class => ['all' => true]
-    create config/packages/fos_elastica.yaml file
+
+    #where the database is modified externally, the Elasticsearch index must be updated manually. This can be achieved by running the console command:
+        php bin/console fos:elastica:populate
+    to see the configuration:
+        http://localhost:9200/products?pretty
 
 
+---Datatables
+composer require omines/datatables-bundle
+php bin/console assets:install
+
+---Form--
+php bin/console make:form EntityName
+
+composer require symfony/validator
+
+
+---Sonata Admin Bundle---
+composer require symfony/class-loader 3.4.x-dev
+composer require sonata-project/admin-bundle
+composer require sonata-project/doctrine-orm-admin-bundle

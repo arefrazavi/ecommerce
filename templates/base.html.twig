@@ -1,26 +1,69 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <script src="{{ asset("js/bootstrap.min.js") }}"></script>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="flash-{{ label }} alert-{{ label }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ path('home') }}">E-commerce</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('home') }}">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('product_list') }}">Products</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav my-2 my-lg-0">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Hello {{ app.user.firstName }}!
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="dropdown-item" href="{{ path('sonata_admin_dashboard') }}">Admin Panel</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('register') }}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('login') }}">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row mt-3 mb-2">
+        <div class="col-lg-6 offset-lg-3">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }} alert-{{ label }}">
+                        {{ message }}
+                    </div>
                 {% endfor %}
-            </div>
+            {% endfor %}
         </div>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    </div>
+    {% block body %}{% endblock %}
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="{{ asset("js/bootstrap.min.js") }}"></script>
+{% block javascripts %}{% endblock %}
+</body>
 </html>

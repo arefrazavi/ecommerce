@@ -1,24 +1,30 @@
+# Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/Resources/doc/setup.md
 fos_elastica:
     clients:
         default: { host: localhost, port: 9200 }
     indexes:
-        app:
+        product_index:
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            text_analyzer:
+                                type: snowball
+                                language: English
             types:
                 product:
                     properties:
-                        title: ~
-                        description: ~
+                        title: { boost: 2}
+                        description: { analyzer: text_analyzer }
+                        variants:
+                            type: object
+                            properties:
+                                color: ~
+                                price:
+                                    type: integer
                     persistence:
                         driver: orm
                         model: App\Entity\Product
                         provider: ~
                         finder: ~
-                variant:
-                    properties:
-                        color: ~
-                        price: ~
-                    persistence:
-                        driver: orm
-                        model: App\Entity\Variant
-                        provider: ~
-                        finder: ~
+                        repository: App\Repository\SearchRepository\ProductSearchRepository

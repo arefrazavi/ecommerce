@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -20,6 +22,7 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -29,7 +32,7 @@ class Product
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Variant", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\Variant", mappedBy="product", cascade={"persist"}, orphanRemoval=true)
      */
     private $variants;
 

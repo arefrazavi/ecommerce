@@ -9,8 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-    {% if(userID) %}
-        <h1>Hello {{  firstName }}! ✅</h1>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <h3>Hello {{ app.user.firstName }}! </h3>
+            <div> <a href="{{ path('logout') }}"> Logout </a> </div>
+    {% else %}
+            <h2>Welcome to My simple E-commerce application!</h2>
+            <div> <a style="color: limegreen; font-weight: bold" href="{{ path('register') }}"> Register </a> or <a href="{{ path('login') }}"> Login </a> </div>
     {% endif %}
 </div>
 {% endblock %}
